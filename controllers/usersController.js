@@ -8,9 +8,10 @@ const bcrypt = require('bcrypt')
 // @access Private
 const getAllUsers = asyncHandler(async(req, res) => {
   const users = await User.find().select('-password').lean()
-  if (!users) {
-    return res.status(400).json({ message: 'No users found'})
 
+  // If no users
+  if (!users?.length) {
+    return res.status(400).json({ message: 'No users found'})
   }
   res.json(users)
 })
@@ -18,13 +19,12 @@ const getAllUsers = asyncHandler(async(req, res) => {
 // @desc Create all users
 // @route POST /users
 // @access Private
-const createNewlUser = asyncHandler(async(req, res) => {
+const createNewUser = asyncHandler(async(req, res) => {
   const { username, password, roles } = req.body
 
   // Confirm data
   if (!username || !password || !Array.isArray(roles) || !roles.length) {
     return res.status(400).json({ message: 'All fields are required'})
-
   }
 
   // Check for duplicate
@@ -120,7 +120,7 @@ const deleteUser = asyncHandler(async(req, res) => {
 
 module.exports = {
   getAllUsers,
-  createNewlUser,
+  createNewUser,
   updatelUser,
   deleteUser
 }
