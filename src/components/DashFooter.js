@@ -16,11 +16,16 @@ const DashFooter = () => {
         className='dash-footer__button icon-button'
         title='Home'
         onClick={onGoHomeClicked}
-      />
+      >
+        <FontAwesomeIcon icon={faHouse} />
+
+      </button>
+      
     )
   }
   const content = (
     <footer className='dash-footer'>
+        {goHomeButton}
         <p>Current User:</p>
         <p>Status:</p>
     </footer>
